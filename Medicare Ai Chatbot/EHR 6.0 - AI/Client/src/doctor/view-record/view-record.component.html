@@ -1,0 +1,60 @@
+<div>
+  <form (ngSubmit)="onViewRecord()" class="form flex flex-row justify-center items-center my-4">
+    <div class="flex flex-row items-center pe-3">
+      <!--            <label class="text-base me-2" for="patient">Select Patient</label>-->
+      <p-dropdown [(ngModel)]="selectedPatient" [appendTo]="'body'" [filter]="true" [options]="patients"
+                  [showClear]="true" class="w-full border min-w-[400px]" filterBy="name,id" id="patient"
+                  name="patient" optionLabel="name" placeholder="Select a Patient">
+        <ng-template let-p pTemplate="item">
+          <div class="flex flex-col align-items-center gap-2">
+            <div>{{ p.name }}</div>
+            <div class="text-xs">{{ p.id }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div>
+      <button (click)="onViewRecord()" class="p-3 bg-green-500 hover:bg-green-400 text-white rounded-md">
+        View Records
+      </button>
+    </div>
+  </form>
+
+  <div class="mr-list-container my-3 w-full">
+    <div class="w-full md:w-3/4 mx-auto">
+      <p-table [paginator]="true"
+               [rowsPerPageOptions]="[5,10,20]"
+               [rows]="5"
+               [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }" [value]="selectedPatientRecords">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Date</th>
+            <th></th>
+            <th>View</th>
+          </tr>
+        </ng-template>
+        <ng-template let-r pTemplate="body">
+          <tr>
+            <td>{{ r.dateTime | date:'short' }}</td>
+            <td>{{ r.doctor.name }}</td>
+            <td>
+              <button (click)="viewDiagnosis(r,JSON.parse(r.medical_record))"
+                      class="bg-blue-500 hover:bg-blue-400 text-sm text-white p-2 rounded-md">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3">No Records found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <app-record-modal [diagnosis]="selectedDiagnosis" [showDiagnosis]="showRecordDialog"/>
+
+</div>
+
+<app-progress-card></app-progress-card>

@@ -1,0 +1,59 @@
+<p-dialog [(visible)]="showAnalysis" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false"
+          [style]="{ width: '50vw' }" header="Initial Analysis" position="top">
+  <div *ngIf="analysis">
+    <div class="analysis-info my-3">
+      <div>Date: <span class="ms-3 text-sm mt-4">{{getTimeStamp(analysis.bc_data.date) | date:'medium'}}</span>
+      </div>
+      <div>RMO Id: <span class="ms-3 text-sm mt-4">{{analysis.bc_data.drId}}</span></div>
+    </div>
+    <div class="pat-info w-full">
+      <div class="text-lg font-[600]">
+        Patient Information
+      </div>
+      <div
+        class="grid auto-cols-auto gap-2 xl:grid-cols-2 my-3 bg-gray-200 p-3 text-xs rounded-md shadow text-gray-800">
+        <div>Name:<span class="ms-3 mt-4">{{ analysis.ia_data.patient?.name}}</span></div>
+        <div>Id:<span class="ms-3 mt-4">{{analysis.ia_data.patient?.id}}</span></div>
+        <div>Age:<span class="ms-3 text-sm mt-4">{{analysis.ia_data.patient?.age}}</span></div>
+        <div>Blood Group:<span class="ms-3 mt-4">{{analysis.ia_data.patient?.blood_group}}</span></div>
+        <div>Phone:<span class="ms-3 mt-4">{{analysis.ia_data.patient?.phone}}</span></div>
+        <div>Email:<span class="ms-3 mt-4">{{analysis.ia_data.patient?.email}}</span></div>
+      </div>
+    </div>
+    <div class="ia-info my-3">
+      <div class="text-lg  font-[600] mb-2">Diagnosis</div>
+      <div class="diagnosis">
+        <p class="w-full text-gray-800 bg-gray-200 p-3 rounded-md"> {{analysis.ia_data.diagnosis}}</p>
+      </div>
+    </div>
+    <div *ngIf="analysis.ia_data.fdr === 'true';else noFdr" class="fdr">
+      <hr>
+      <div class="text-base font-[400] text-red-400 my-2">Further Diagnosis required</div>
+      <div class="doc-info w-full">
+        <div class="text-lg font-[600]">
+          Doctor Information
+        </div>
+        <div
+          class="grid auto-cols-auto gap-2 xl:grid-cols-2 my-3 bg-gray-200 p-3 text-xs rounded-md shadow text-gray-800">
+          <div>Name:<span class="ms-3 mt-4">{{ analysis.ia_data.doctor?.name}}</span></div>
+          <div>Id:<span class="ms-3 mt-4">{{analysis.ia_data.doctor?.id}}</span></div>
+          <div>Phone:<span class="ms-3 mt-4">{{analysis.ia_data.doctor?.phone}}</span></div>
+          <div>Email:<span class="ms-3 mt-4">{{analysis.ia_data.doctor?.email}}</span></div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noFdr>
+      <div class="text-base font-[400] text-green-400">No Further Diagnosis Required</div>
+    </ng-template>
+    <hr>
+    <div class="mr-files my-3">
+      <div class="text-lg font-[600] mb-2">Medical Files</div>
+      <ul>
+        <li *ngFor="let f of getFiles(analysis.ia_data?.files)" class="text-sm font-[400] text-blue-500 py-1">
+          <a [href]="'http://localhost:8080/ipfs/'+f.cid" class="hover:text-blue-800" target="_blank">{{f?.name}}
+            - {{formatBytes(f.size)}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</p-dialog>

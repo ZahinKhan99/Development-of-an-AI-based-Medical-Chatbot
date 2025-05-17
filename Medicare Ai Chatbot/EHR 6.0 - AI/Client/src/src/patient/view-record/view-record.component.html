@@ -1,0 +1,49 @@
+<div class="view-record m-3">
+<!--  <div class="initial-analysis">-->
+<!--    <div class="text-xl font-[500] p-3">-->
+<!--      Initial Analysis-->
+<!--    </div>-->
+<!--    <hr>-->
+<!--    <div-->
+<!--      class="analysis w-full md:w-full xl:w-5/6 m-3 p-3 rounded-md shadow border flex flex-row justify-between items-center">-->
+<!--      <div>-->
+<!--        <div class="date">-->
+<!--          Date: <span class="text-sm">10/12/2020</span>-->
+<!--        </div>-->
+<!--        <div class="rmo-id">-->
+<!--          Predicted Disease: <span class="text-sm"></span>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <button (click)="showAnalysisDialog()" class="bg-blue-500 text-white p-2 text-sm rounded-md hover:bg-blue-400">-->
+<!--        <i class="fa-solid fa-up-right-from-square"></i>&nbsp;-->
+<!--        View Analysis-->
+<!--      </button>-->
+
+<!--    </div>-->
+<!--  </div>-->
+  <div class="medical-records">
+    <div class="text-xl font-[500] p-3">
+      Medical Diagnosis Records
+    </div>
+    <hr>
+    <div *ngFor="let d of diagnosis"
+         class="records w-full bg-zinc-50 md:w-full xl:w-5/6 m-3 p-3 rounded-md shadow border flex flex-row justify-between items-center">
+      <div>
+        <div class="date">
+          Date: <span class="text-sm">{{d.dateTime | date: 'short'}}</span>
+        </div>
+        <div class="rmo-id">
+          Doctor: <span class="text-sm">{{ getDocName(d.doctor)}}</span>
+        </div>
+      </div>
+
+      <button (click)="showDialog(d.medical_record)" class="bg-amber-500 text-white p-2 text-sm rounded-md hover:bg-amber-400">
+        <i class="fa-solid fa-up-right-from-square"></i>&nbsp;
+        View Diagnosis Record
+      </button>
+    </div>
+  </div>
+  <app-analysis-modal [analysis]="analysis" [showAnalysis]="shoAnalysis"></app-analysis-modal>
+  <app-record-modal [diagnosis]="selectedDiagnosis"></app-record-modal>
+</div>

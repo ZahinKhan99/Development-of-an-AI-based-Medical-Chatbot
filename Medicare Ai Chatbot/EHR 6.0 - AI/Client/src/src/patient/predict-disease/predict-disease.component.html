@@ -1,0 +1,126 @@
+<div class="w-[100%] min-w-[100%] h-full overflow-hidden p-5">
+  <div class="chat-container bg-zinc-50 w-full rounded-lg overflow-hidden p-3">
+
+    <div class="messages overflow-y-auto w-full h-[80%] flex flex-col p-3">
+
+      <div *ngIf="messages.length<1" class="flex flex-col justify-center items-center h-full">
+        <div><i class="fa-solid fa-robot text-6xl pb-5 text-violet-600"></i></div>
+        <div class="text-2xl font-[400] text-gray-600">Please select an option to start interacting with the chat bot.
+        </div>
+      </div>
+      <div class="flex flex-col mt-auto">
+        <div *ngFor="let message of messages"
+             [ngClass]="{'bot-message': message.user === 0, 'user-message': message.user === 1}"
+             class="message flex flex-row justify-start">
+          <div *ngIf="message.user === 0" class="text-2xl text-violet-800">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div *ngIf="!message.isPredicted; else predicted"
+               [ngClass]="{'bg-violet-500 rounded-tr-xl':message.user === 0, 'bg-blue-500 rounded-tl-xl':message.user === 1}"
+               class="mx-2 mt-3 text-sm p-3 text-white rounded-b-xl">
+            {{ message.msg }}
+          </div>
+          <ng-template #predicted>
+            <div *ngIf="message.prediction"
+                 class="flex flex-col gap-2 mx-2 mt-3  p-3 shadow border bg-zinc-100 rounded-tr-xl rounded-b-xl">
+              <div>
+                <div class="text-xl font-bold">Predicted Disease :
+                  <span class="text-red-500">{{ message.prediction.predicted_disease }}</span>
+                </div>
+              </div>
+              <div>
+                <div class="text-sm font-bold">Disease Description:
+                  <span class="text-blue-400 text-xs"> {{ message.prediction.dis_des }}</span>
+                </div>
+              </div>
+              <div>
+                <div class="text-sm font-bold">Precautions:</div>
+                <ul>
+                  <li *ngFor="let p of message.prediction.my_precautions" class="text-xs text-gray-500">{{ p }}</li>
+                </ul>
+              </div>
+              <div>
+                <h6 class="text-sm font-bold">Medications:</h6>
+                <ul>
+                  <li *ngFor="let m of message.prediction.medications" class="text-xs text-gray-500">{{ m }}</li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="text-sm font-bold">Recommended Diet:</div>
+                <ul>
+                  <li *ngFor="let d of message.prediction.my_diet" class="text-xs text-gray-500">{{ d }}</li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="text-sm font-bold">Recommended Workout:</div>
+                <ul>
+                  <li *ngFor="let w of message.prediction.workout" class="text-xs text-gray-500">{{ w }}</li>
+                </ul>
+              </div>
+            </div>
+          </ng-template>
+          <div *ngIf="message.user === 1" class="text-2xl text-blue-800">
+            <i class="fa-solid fa-user-injured"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div class="options p-2">
+      <label class="text-gray-500 ff-[Inter] text-sm" for="bot-options">{{ optionsLblTxt }}</label>
+      <div class="flex flex-row gap-2">
+        <div class="bot-options p-2 w-full overflow-y-auto h-[130px]" id="bot-options">
+
+          <span *ngIf="!showPredictBtn;else symptoms">
+            <button (click)="onOptionClicked(option)" *ngFor="let option of options"
+                    class="bg-blue-100/50 hover:bg-blue-600 text-violet-500 border border-violet-600 hover:text-white hover:border-0 shadow focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-xs px-4 py-2 text-center me-2 mb-2"
+                    type="button">
+              {{ option }}
+            </button>
+          </span>
+          <ng-template #symptoms>
+            <form class="mb-2">
+              <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg aria-hidden="true" class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                       fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"/>
+                  </svg>
+                </div>
+                <input (change)="onSymptomSelected($event)"
+                       [value]="selectedSymptom"
+                       class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                       id="search" list="symptomsList" name="selectedSymptom"
+                       placeholder="Search"
+                       required type="search"/>
+              </div>
+            </form>
+            <datalist id="symptomsList">
+              <option *ngFor="let s of allSymptoms">{{ s }}</option>
+            </datalist>
+            <button (click)="removeSymptom(symptom)" *ngFor="let symptom of selectedSymptoms"
+                    [ngClass]="{'bg-blue-800 text-white hover:bg-blue-100':selectedSymptoms.includes(symptom),'text-violet-500 border border-violet-600 ':!selectedSymptoms.includes(symptom)}"
+                    class="bg-blue-100/50 hover:bg-blue-600 hover:text-white hover:border-0 shadow focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-xs px-4 py-2 text-center me-2 mb-2"
+                    type="button">
+              {{ symptom }}
+            </button>
+          </ng-template>
+
+        </div>
+        <div *ngIf="showPredictBtn" class="flex flex-col justify-center items-center">
+          <button
+            (click)="predictDisease()"
+            class="bg-emerald-600 p-2 flex flex-row gap-1 justify-center items-center text-sm text-white rounded-lg">
+            <i class="fa-regular fa-paper-plane"></i>
+            Predict
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

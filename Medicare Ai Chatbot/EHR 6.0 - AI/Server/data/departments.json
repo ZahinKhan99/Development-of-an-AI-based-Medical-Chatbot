@@ -1,0 +1,65 @@
+{
+  "Infectious Diseases": [
+    "AIDS",
+    "Gastroenteritis",
+    "Jaundice",
+    "Malaria",
+    "Chicken pox",
+    "Dengue",
+    "Typhoid",
+    "Hepatitis A",
+    "Hepatitis B",
+    "Hepatitis C",
+    "Hepatitis D",
+    "Hepatitis E",
+    "Tuberculosis",
+    "Common Cold",
+    "Pneumonia",
+    "Urinary tract infection",
+    "Impetigo"
+  ],
+  "Allergy and Immunology": [
+    "Allergy"
+  ],
+  "Gastroenterology": [
+    "GERD",
+    "Peptic ulcer disease",
+    "Chronic cholesterol",
+    "Dimorphic hemorrhoids(piles)",
+    "Alcoholic hepatitis"
+  ],
+  "Endocrinology": [
+    "Diabetes",
+    "Hyperthyroidism",
+    "Hypothyroidism",
+    "Hypoglycemia"
+  ],
+  "Pulmonology": [
+    "Bronchial Asthma"
+  ],
+  "Cardiology": [
+    "Hypertension",
+    "Heart attack"
+  ],
+  "Neurology": [
+    "Migraine",
+    "Cervical spondylosis",
+    "Paralysis (brain hemorrhage)",
+    "(vertigo) Paroxysmal Positional Vertigo"
+  ],
+  "Dermatology": [
+    "Acne",
+    "Psoriasis",
+    "Fungal infection"
+  ],
+  "Rheumatology": [
+    "Osteoarthritis",
+    "Arthritis"
+  ],
+  "Vascular Surgery": [
+    "Varicose veins"
+  ],
+  "General Medicine": [
+    "Drug Reaction"
+  ]
+}

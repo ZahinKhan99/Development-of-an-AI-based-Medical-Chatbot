@@ -1,0 +1,84 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap')
+@import "primeng/resources/themes/lara-light-blue/theme.css"
+@import "primeng/resources/primeng.css"
+@import "primeicons/primeicons.css"
+
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+
+body
+  margin: 0
+  padding: 0
+
+.p-togglebutton
+  width: fit-content
+  padding: 6px
+  box-shadow: none
+  @apply bg-gray-100
+  @apply text-gray-400
+  @apply my-1
+  @apply transition-all
+  @apply border
+  @apply shadow
+  border-radius: 0
+
+.p-highlight
+  @apply text-white
+  @apply bg-blue-600
+
+.selector > div > p-togglebutton:nth-child(1) > div
+  @apply rounded-l-xl
+
+.selector > div > p-togglebutton:last-child > div
+  @apply rounded-r-xl
+
+.p-button-label
+  font-weight: 400
+  padding-right: 5px
+  font-size: 12px !important
+
+p-paginator > div > span.p-paginator-current.ng-star-inserted
+  font-size: 14px !important
+
+#patient > div, #doctor > div
+  width: 500px
+
+.cert-back
+  width: 650px
+  height: 450px
+  max-width: 650px
+  position: relative
+  background-image: url('./assets/cert_back.svg')
+  background-size: cover
+  background-repeat: no-repeat
+  font-family: 'Dancing Script', cursive
+
+.p-progress-spinner-svg
+  width: 45px
+
+input::file-selector-button
+  font-weight: 500
+  color: var(--primary-700)
+  padding: 8px
+  border: none
+  border-right: 1px solid var(--gray-300)
+  background-color: inherit
+
+
+.predict-image-container.flex.flex-row.my-3.mx-3.gap-2 > div:nth-child(3) > p-progressspinner > div
+  height: 38px !important
+
+.p-dropdown
+  width: 100% !important
+
+.p-inputtext
+  padding: 0.75rem 0.75rem !important
+  font-size: 12px !important
+
+.p-input-icon-left > .p-inputtext
+  font-weight: normal !important
+  padding-left: 2rem !important
+  @apply border border-blue-500 rounded-lg

@@ -1,0 +1,74 @@
+<p-dialog [(visible)]="showDiagnosis" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false"
+          [style]="{ width: '50vw' }" header="Medical Diagnosis" position="top">
+  <div *ngIf="diagnosis">
+    <div class="ia-info my-3">
+      <div class="text-lg  font-[600] mb-2">Diagnosis
+        <hr>
+      </div>
+      <div class="diagnosis">
+        <p class="w-full text-gray-800 bg-gray-200 p-3 rounded-md"> {{ diagnosis.diagnosis }}</p>
+      </div>
+    </div>
+
+    <div class="medicines my-3">
+      <div class="text-lg  font-[600] mb-2">Medicines
+        <hr>
+      </div>
+      <table class="w-full md:w-1/4 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-2">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 p-2">
+        <th class="px-2 py-2">#</th>
+        <th class="px-6 py-2">Name</th>
+        <th class="px-6 py-2">Dose</th>
+        <th class="px-6 py-2">Frequency</th>
+        <th class="px-6 py-2">No.of.Days</th>
+        <th class="px-6 py-2">Remarks</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let m of diagnosis.medicines;let i=index"
+            class="odd:bg-white odd:dark:bg-zinc-300 even:bg-zinc-400 border-b text-black">
+          <td class="px-2 py-2">{{ i + 1 }}</td>
+          <td class="px-6 py-2">{{ m.name }}</td>
+          <td class="px-6 py-2">{{ m.dose }}</td>
+          <td class="px-6 py-2">{{ m.frequency }}</td>
+          <td class="px-6 py-2">{{ m.noOfDays }}</td>
+          <td class="px-6 py-2">{{ m.remarks }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tests my-3">
+      <div class="text-lg  font-[600] mb-2">Medicines
+        <hr>
+      </div>
+      <ol type="1">
+        <li *ngFor="let t of diagnosis.tests" class="text-sm text-gray-500">{{ t }}</li>
+      </ol>
+    </div>
+
+    <div class="followup my-3">
+      <div class="text-lg  font-[600] mb-2">Follow Up
+        <hr>
+      </div>
+      <div class="text-gray-400 text-sm">
+        {{ diagnosis.followup }}
+      </div>
+    </div>
+
+    <hr>
+    <div class="mr-files my-3">
+      <div class="text-lg font-[600] mb-2">Medical Files</div>
+      <ul *ngIf="files;else noFiles">
+        <li *ngFor="let f of files" class="text-sm font-[400] text-blue-500 py-1">
+          <a [href]="getFileDownloadLink(f.filename)" class="hover:text-blue-800"
+             target="_blank">
+            {{ f?.filename }}
+          </a>
+        </li>
+      </ul>
+      <ng-template #noFiles>
+        No Files
+      </ng-template>
+    </div>
+  </div>
+</p-dialog>
